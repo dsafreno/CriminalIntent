@@ -24,8 +24,8 @@ import java.util.UUID;
 public class CrimeFragment extends Fragment {
     public static final String EXTRA_CRIME_ID = "com.bignerdranch.android.criminalintent.crime_id";
 
-    private static final String DIALOG_DATE = "date";
-    private static final int REQUEST_DATE = 0;
+    private static final String DIALOG_DATE_TIME_CHOOSER = "date_time_chooser";
+    private static final int REQUEST_DATE_TIME_CHOOSER = 0;
 
     public static CrimeFragment newInstance(UUID crimeId) {
         Bundle args = new Bundle();
@@ -57,8 +57,8 @@ public class CrimeFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != Activity.RESULT_OK) return;
-        if (requestCode == REQUEST_DATE) {
-            Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+        if (requestCode == REQUEST_DATE_TIME_CHOOSER) {
+            Date date = (Date) data.getSerializableExtra(DateTimeChooserFragment.EXTRA_DATETIME);
             mCrime.setDate(date);
             updateDate();
         }
@@ -90,9 +90,10 @@ public class CrimeFragment extends Fragment {
         mDateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                DatePickerFragment dialog = DatePickerFragment.newInstance(mCrime.getDate());
-                dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
-                dialog.show(fm, DIALOG_DATE);
+                DateTimeChooserFragment dialog =
+                        DateTimeChooserFragment.newInstance(mCrime.getDate());
+                dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE_TIME_CHOOSER);
+                dialog.show(fm, DIALOG_DATE_TIME_CHOOSER);
             }
         });
 
